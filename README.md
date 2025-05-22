@@ -14,7 +14,7 @@ You can download the latest release from the [Releases](https://github.com/jwick
   - Import patches from your local library
   - Organize patches into banks
   - Preview patch names and details
-  - Export patches to your Muse synthesizer
+  - Export patches to a USB thumb drive for transfer to your Muse synthesizer
 
 - **Library Organization**
   - Create and manage patch banks
@@ -40,8 +40,7 @@ You can download the latest release from the [Releases](https://github.com/jwick
 ### First Launch
 
 1. Launch the application
-2. Connect your Moog Muse synthesizer via USB
-3. The app will automatically detect your device
+2. The app will create a local database to store your patch library
 
 ### Importing Patches
 
@@ -62,8 +61,11 @@ You can download the latest release from the [Releases](https://github.com/jwick
 
 1. Select the patches you want to export
 2. Click the "Export" button
-3. Choose the destination bank on your Muse
-4. Wait for the transfer to complete
+3. Choose a USB thumb drive as the export destination
+4. The app will create the proper directory structure on the USB drive
+5. Safely eject the USB drive
+6. Insert the USB drive into your Moog Muse synthesizer
+7. Use the Muse's file browser to import the patches
 
 ## Support
 

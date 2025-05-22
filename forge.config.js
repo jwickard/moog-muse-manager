@@ -58,12 +58,14 @@ module.exports = {
           {
             entry: 'src/preload/preload.ts',
             config: 'vite.preload.config.ts',
-          },
-          {
-            entry: 'src/renderer/index.html',
-            config: 'vite.renderer.config.ts',
-          },
+          }
         ],
+        renderer: [
+          {
+            name: 'renderer',
+            config: 'vite.renderer.config.ts',
+          }
+        ]
       },
     },
   ],

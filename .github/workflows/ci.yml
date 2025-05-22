@@ -163,8 +163,12 @@ jobs:
       with:
         tag_name: ${{ steps.get_tag.outputs.tag }}
         files: |
-          artifacts/electron-app-macos-latest/**/*
-          artifacts/electron-app-ubuntu-latest/**/*
+          artifacts/electron-app-macos-latest/**/*.dmg
+          artifacts/electron-app-macos-latest/**/*.zip
+          artifacts/electron-app-ubuntu-latest/**/*.deb
+          artifacts/electron-app-ubuntu-latest/**/*.rpm
+          artifacts/electron-app-ubuntu-latest/**/*.zip
+          !artifacts/**/locale.pak
         draft: false
         generate_release_notes: true
       env:

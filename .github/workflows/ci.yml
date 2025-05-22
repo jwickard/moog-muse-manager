@@ -129,7 +129,7 @@ jobs:
     - name: Release
       env:
         GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
-      run: npx semantic-release
+      run: npx semantic-release --config config/.releaserc.json
 
     - name: Download all artifacts
       uses: actions/download-artifact@v4

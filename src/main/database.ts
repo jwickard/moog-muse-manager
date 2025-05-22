@@ -57,7 +57,15 @@ export class DatabaseManager {
 
   constructor(dbPath?: string) {
     const defaultPath = path.join(app.getPath('userData'), 'patches.db');
-    this.db = new Database(dbPath || defaultPath);
+    const finalPath = dbPath || defaultPath;
+    
+    // Ensure the directory exists
+    const dbDir = path.dirname(finalPath);
+    if (!fs.existsSync(dbDir)) {
+      fs.mkdirSync(dbDir, { recursive: true });
+    }
+    
+    this.db = new Database(finalPath);
     this.setupDatabase();
   }
 

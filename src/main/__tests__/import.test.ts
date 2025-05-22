@@ -56,16 +56,32 @@ describe('Patch Import', () => {
       fs.unlinkSync(testDbPath);
     }
 
+    // Ensure the test database directory exists
+    const dbDir = path.dirname(testDbPath);
+    if (!fs.existsSync(dbDir)) {
+      fs.mkdirSync(dbDir, { recursive: true });
+    }
+
     // Create a new DatabaseManager instance with a temporary file-based database
     db = new DatabaseManager(testDbPath);
   });
 
   afterEach(() => {
     // Clean up test database
-    if (fs.existsSync(testDbPath)) {
-      fs.unlinkSync(testDbPath);
+    if (db) {
+      try {
+        db.close();
+      } catch (error) {
+        console.error('Error closing database:', error);
+      }
     }
-    db.close();
+    if (fs.existsSync(testDbPath)) {
+      try {
+        fs.unlinkSync(testDbPath);
+      } catch (error) {
+        console.error('Error removing test database:', error);
+      }
+    }
   });
 
   afterAll(() => {

@@ -1,0 +1,97 @@
+{
+  "rules": [
+    {
+      "name": "Generate Tests for New Code",
+      "description": "Automatically generate tests for new or modified code",
+      "pattern": "**/*.{ts,tsx}",
+      "exclude": ["**/*.test.{ts,tsx}", "**/*.spec.{ts,tsx}", "**/test/**", "**/tests/**"],
+      "action": {
+        "type": "generate_test",
+        "framework": "jest",
+        "template": {
+          "imports": [
+            "import { render, screen, fireEvent } from '@testing-library/react';",
+            "import '@testing-library/jest-dom';"
+          ],
+          "structure": [
+            "describe('${componentName}', () => {",
+            "  it('should render correctly', () => {",
+            "    // Arrange",
+            "    // Act",
+            "    // Assert",
+            "  });",
+            "",
+            "  it('should handle user interactions', () => {",
+            "    // Arrange",
+            "    // Act",
+            "    // Assert",
+            "  });",
+            "});"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Generate Tests for Database Operations",
+      "description": "Generate tests for database-related code changes",
+      "pattern": "**/database/**/*.ts",
+      "action": {
+        "type": "generate_test",
+        "framework": "jest",
+        "template": {
+          "imports": [
+            "import { DatabaseManager } from './database-manager';",
+            "import { jest } from '@jest/globals';"
+          ],
+          "structure": [
+            "describe('DatabaseManager', () => {",
+            "  let db: DatabaseManager;",
+            "",
+            "  beforeEach(() => {",
+            "    db = new DatabaseManager();",
+            "  });",
+            "",
+            "  afterEach(() => {",
+            "    db.close();",
+            "  });",
+            "",
+            "  it('should perform database operations correctly', () => {",
+            "    // Arrange",
+            "    // Act",
+            "    // Assert",
+            "  });",
+            "});"
+          ]
+        }
+      }
+    },
+    {
+      "name": "Generate Tests for Store Operations",
+      "description": "Generate tests for Zustand store changes",
+      "pattern": "**/store/**/*.ts",
+      "action": {
+        "type": "generate_test",
+        "framework": "jest",
+        "template": {
+          "imports": [
+            "import { renderHook, act } from '@testing-library/react';",
+            "import { useStore } from './store';"
+          ],
+          "structure": [
+            "describe('Store', () => {",
+            "  it('should update state correctly', () => {",
+            "    const { result } = renderHook(() => useStore());",
+            "",
+            "    act(() => {",
+            "      // Perform store actions",
+            "    });",
+            "",
+            "    expect(result.current).toBeDefined();",
+            "  });",
+            "});"
+          ]
+        }
+      }
+    }
+  ]
+} 

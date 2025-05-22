@@ -10,7 +10,10 @@ export default defineConfig({
         entry: 'src/main/main.ts',
         vite: {
           build: {
-            outDir: 'dist/main',
+            outDir: '.vite/build',
+            rollupOptions: {
+              external: ['better-sqlite3'],
+            },
           },
         },
       },
@@ -18,7 +21,10 @@ export default defineConfig({
         entry: 'src/preload/preload.ts',
         vite: {
           build: {
-            outDir: 'dist/preload',
+            outDir: '.vite/build',
+            rollupOptions: {
+              external: ['better-sqlite3'],
+            },
           },
         },
       },

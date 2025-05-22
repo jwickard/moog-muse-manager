@@ -19,5 +19,8 @@ export default defineConfig({
   define: {
     'process.env.NODE_ENV': JSON.stringify(process.env.NODE_ENV),
     'process.env.DEBUG': JSON.stringify(process.env.DEBUG),
-  }
+  },
+  css: {
+    postcss: './postcss.config.js', // Explicitly point to PostCSS config
+  },
 }); 

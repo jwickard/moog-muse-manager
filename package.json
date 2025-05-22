@@ -2,7 +2,7 @@
   "name": "moog-muse-manager",
   "version": "0.1.0",
   "description": "A desktop application to manage sound patches and step-sequencer files for the Moog Muse synthesizer",
-  "main": "dist/main/main.js",
+  "main": ".vite/build/main.js",
   "scripts": {
     "start": "electron-forge start",
     "package": "electron-forge package",

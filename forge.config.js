@@ -1,7 +1,6 @@
 module.exports = {
   packagerConfig: {
     asar: true,
-    icon: './assets/icon',
   },
   rebuildConfig: {},
   makers: [
@@ -21,7 +20,6 @@ module.exports = {
           homepage: 'https://github.com/joelwickard/moog-muse-manager',
           categories: ['Audio', 'Music'],
           description: 'A desktop application to manage sound patches and step-sequencer files for the Moog Muse synthesizer',
-          icon: './assets/icon.png',
           mimeType: ['audio/midi'],
           bin: 'moog-muse-manager',
           section: 'sound',
@@ -38,7 +36,6 @@ module.exports = {
       name: '@electron-forge/maker-dmg',
       config: {
         format: 'ULFO',
-        icon: './assets/icon.icns',
       },
     },
   ],

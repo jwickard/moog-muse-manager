@@ -139,23 +139,32 @@ jobs:
         echo "Git config:"
         git config --list
 
-    - name: Release
-      env:
-        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        DEBUG: "semantic-release:*"
-      run: npx semantic-release --debug
-
     - name: Download all artifacts
       uses: actions/download-artifact@v4
       with:
         path: artifacts
 
     - name: Create Release
+      id: create_release
+      uses: softprops/action-gh-release@v1
+      with:
+        draft: true
+        generate_release_notes: true
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+
+    - name: Release
+      env:
+        GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        DEBUG: "semantic-release:*"
+      run: npx semantic-release --debug
+
+    - name: Upload Release Assets
       uses: softprops/action-gh-release@v1
       with:
         files: |
           artifacts/electron-app-macos-latest/**/*
           artifacts/electron-app-ubuntu-latest/**/*
-        draft: true
+        draft: false
       env:
         GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }} 

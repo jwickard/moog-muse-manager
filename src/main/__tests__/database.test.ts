@@ -1,7 +1,6 @@
 import { dbManager, Patch } from '../database';
 import path from 'path';
 import fs from 'fs';
-import { app } from 'electron';
 
 // Mock electron app
 jest.mock('electron', () => ({

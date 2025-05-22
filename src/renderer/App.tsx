@@ -1,5 +1,5 @@
-import React, { useState, useEffect } from 'react'
-import path from 'path'
+import React, { useState, useEffect } from 'react';
+import { Patch } from '../main/database';
 
 // Define the type for the window object with our electron API
 declare global {
@@ -12,26 +12,6 @@ declare global {
     }
   }
 }
-
-interface Patch {
-  path: string;
-  name: string;
-  loved: boolean;
-  category: string;
-  tags: string[];
-  bank: string;
-  library: string;
-  checksum: string;
-  custom: boolean;
-}
-
-// Helper function to capitalize first letter of each word
-const capitalizeWords = (str: string): string => {
-  return str
-    .split(/[-_\s]/) // Split by hyphen, underscore, or space
-    .map(word => word.charAt(0).toUpperCase() + word.slice(1).toLowerCase())
-    .join(' ');
-};
 
 const App: React.FC = () => {
   const [patches, setPatches] = useState<Patch[]>([]);
@@ -68,36 +48,34 @@ const App: React.FC = () => {
     loadSavedPatches();
   }, []);
 
-  const handleImportPatches = async () => {
+  const handleImport = async (): Promise<void> => {
     try {
-      console.log('Starting import...');
-      await window.electronAPI.importPatches();
-      console.log('Import completed, reloading patches...');
-      
-      // Reload all patches from the database
-      const allPatches = await window.electronAPI.loadPatches();
-      console.log('Loaded patches:', allPatches);
-      
-      // Update categories based on all patches
-      const newCategories = new Set([
-        ...categories,
-        ...allPatches.map(patch => patch.category).filter(Boolean)
-      ]);
-      setCategories(Array.from(newCategories));
-      
-      // Update patches state with all patches
-      setPatches(allPatches);
+      const importedPatches = await window.electronAPI.importPatches();
+      setPatches(importedPatches as Patch[]);
     } catch (error) {
       console.error('Error importing patches:', error);
     }
   };
 
-  const handleFilterChange = async (key: string, value: boolean | string) => {
+  const handleExport = async (): Promise<void> => {
+    try {
+      const selectedPatches = patches.filter(p => p.loved).map(p => p.path);
+      if (selectedPatches.length === 0) {
+        alert('Please select patches to export by marking them as loved');
+        return;
+      }
+      await window.electronAPI.exportPatches(selectedPatches);
+    } catch (error) {
+      console.error('Error exporting patches:', error);
+    }
+  };
+
+  const handleFilterChange = async (key: string, value: boolean | string): Promise<void> => {
     const newFilter = { ...filter, [key]: value };
     setFilter(newFilter);
 
     // Check if all filters are cleared
-    const allFiltersCleared = Object.entries(newFilter).every(([k, v]) => {
+    const allFiltersCleared = Object.entries(newFilter).every(([_k, v]) => {
       if (typeof v === 'boolean') return !v;
       return v === '';
     });
@@ -128,16 +106,6 @@ const App: React.FC = () => {
       await window.electronAPI.updatePatch(patch.path, updates);
     } catch (error) {
       console.error('Error updating patch:', error);
-    }
-  };
-
-  const handleExportPatches = async () => {
-    try {
-      const paths = patches.map(patch => patch.path);
-      await window.electronAPI.exportPatches(paths);
-      console.log('Patches exported successfully.');
-    } catch (error) {
-      console.error('Error exporting patches:', error);
     }
   };
 
@@ -176,13 +144,13 @@ const App: React.FC = () => {
       <main>
         <div className="max-w-7xl mx-auto py-6 sm:px-6 lg:px-8">
           <button
-            onClick={handleImportPatches}
+            onClick={handleImport}
             className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded"
           >
             Import Patches
           </button>
           <button
-            onClick={handleExportPatches}
+            onClick={handleExport}
             className="bg-green-500 hover:bg-green-700 text-white font-bold py-2 px-4 rounded ml-2"
           >
             Export Patches
@@ -319,7 +287,7 @@ const App: React.FC = () => {
         </div>
       </main>
     </div>
-  )
-}
+  );
+};
 
-export default App 
+export default App; 

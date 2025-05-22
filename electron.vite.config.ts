@@ -1,7 +1,7 @@
-import { defineConfig } from 'vite'
-import electron from 'vite-plugin-electron'
-import renderer from 'vite-plugin-electron-renderer'
-import path from 'path'
+import { defineConfig } from 'vite';
+import electron from 'vite-plugin-electron';
+import renderer from 'vite-plugin-electron-renderer';
+import path from 'path';
 
 export default defineConfig({
   plugins: [
@@ -30,4 +30,4 @@ export default defineConfig({
       '@': path.resolve(__dirname, './src'),
     },
   },
-}) 
+}); 

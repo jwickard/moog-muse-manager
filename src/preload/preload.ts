@@ -1,4 +1,4 @@
-import { contextBridge, ipcRenderer } from 'electron'
+import { contextBridge, ipcRenderer } from 'electron';
 
 // Expose protected methods that allow the renderer process to use
 // the ipcRenderer without exposing the entire object
@@ -10,7 +10,7 @@ contextBridge.exposeInMainWorld(
     // loadLibrary: () => ipcRenderer.invoke('load-library'),
     // saveMetadata: (data: any) => ipcRenderer.invoke('save-metadata', data),
   }
-)
+);
 
 interface Patch {
   path: string;
@@ -27,4 +27,4 @@ contextBridge.exposeInMainWorld('electronAPI', {
   exportPatches: (patches: string[]) => ipcRenderer.invoke('export-patches', patches),
   loadPatches: () => ipcRenderer.invoke('load-patches') as Promise<Patch[]>,
   updatePatch: (path: string, updates: Partial<Patch>) => ipcRenderer.invoke('update-patch', path, updates)
-}) 
+}); 

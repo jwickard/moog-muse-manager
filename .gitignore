@@ -39,4 +39,8 @@ logs/
 .electron-builder.env
 
 # Database
-*.db 
+*.db
+
+# Project specific
+.cursorrules
+moog_muse_manager_spec.md 

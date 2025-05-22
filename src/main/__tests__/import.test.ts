@@ -1,4 +1,4 @@
-import { app, dialog } from 'electron';
+import { dialog } from 'electron';
 import path from 'path';
 import fs from 'fs';
 import { dbManager } from '../database';

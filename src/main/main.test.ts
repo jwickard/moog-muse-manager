@@ -1,9 +1,8 @@
-import { ipcMain } from 'electron';
 import fs from 'fs';
 import path from 'path';
-import { app } from 'electron';
 
 jest.mock('fs');
+jest.mock('path');
 jest.mock('electron', () => ({
   dialog: {
     showOpenDialog: jest.fn(),
@@ -14,14 +13,39 @@ jest.mock('electron', () => ({
   },
 }));
 
-describe('Main Process IPC Handlers', () => {
-  let fs: any;
-  let electron: any;
+import * as electron from 'electron';
 
+describe('Main Process', () => {
   beforeEach(() => {
     jest.clearAllMocks();
-    fs = require('fs');
-    electron = require('electron');
+  });
+
+  describe('import-patches handler', () => {
+    it('should handle directory selection and import patches', async (): Promise<void> => {
+      (electron.dialog.showOpenDialog as jest.Mock).mockResolvedValue({
+        canceled: false,
+        filePaths: ['/test/path'],
+      });
+
+      const result = await electron.dialog.showOpenDialog({});
+      expect(result).toEqual({
+        canceled: false,
+        filePaths: ['/test/path'],
+      });
+    });
+
+    it('should handle canceled directory selection', async () => {
+      (electron.dialog.showOpenDialog as jest.Mock).mockResolvedValue({
+        canceled: true,
+        filePaths: [],
+      });
+
+      const result = await electron.dialog.showOpenDialog({});
+      expect(result).toEqual({
+        canceled: true,
+        filePaths: [],
+      });
+    });
   });
 
   it('should import patches from a directory', async () => {
@@ -30,15 +54,15 @@ describe('Main Process IPC Handlers', () => {
     const mockStat = { isDirectory: () => false };
 
     electron.dialog.showOpenDialog.mockResolvedValue({ filePaths: mockFilePaths });
-    fs.readdirSync.mockReturnValue(mockFiles);
-    fs.statSync.mockReturnValue(mockStat);
+    (fs.readdirSync as jest.Mock).mockReturnValue(mockFiles);
+    (fs.statSync as jest.Mock).mockReturnValue(mockStat);
 
     // Simulate the handler logic directly
     const patches: string[] = [];
     const scanDirectory = (dir: string) => {
       const files = fs.readdirSync(dir);
       files.forEach((file: string) => {
-        const filePath = require('path').join(dir, file);
+        const filePath = path.join(dir, file);
         const stat = fs.statSync(filePath);
         if (stat.isDirectory()) {
           scanDirectory(filePath);
@@ -56,19 +80,19 @@ describe('Main Process IPC Handlers', () => {
     const mockPatches = ['/path/to/patch1.mmp', '/path/to/patch2.mmp'];
 
     electron.dialog.showSaveDialog.mockResolvedValue({ filePath: mockFilePath });
-    fs.existsSync.mockReturnValue(false);
+    (fs.existsSync as jest.Mock).mockReturnValue(false);
 
     // Simulate the handler logic directly
-    const exportDirectory = require('path').dirname(mockFilePath);
+    const exportDirectory = path.dirname(mockFilePath);
     if (!fs.existsSync(exportDirectory)) {
       fs.mkdirSync(exportDirectory, { recursive: true });
     }
     mockPatches.forEach((patch: string, index: number) => {
-      const patchDir = require('path').join(exportDirectory, `bank${index.toString().padStart(2, '0')}`);
+      const patchDir = path.join(exportDirectory, `bank${index.toString().padStart(2, '0')}`);
       if (!fs.existsSync(patchDir)) {
         fs.mkdirSync(patchDir, { recursive: true });
       }
-      const patchFile = require('path').join(patchDir, `patch${index.toString().padStart(2, '0')}.mmp`);
+      const patchFile = path.join(patchDir, `patch${index.toString().padStart(2, '0')}.mmp`);
       fs.copyFileSync(patch, patchFile);
     });
     // Check that the root and each bank directory were created

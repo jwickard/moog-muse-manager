@@ -17,8 +17,8 @@
     "lint": "eslint . --ext .ts,.tsx",
     "lint:fix": "eslint . --ext .ts,.tsx --fix",
     "preview": "vite preview",
-    "test:main": "jest --config jest.main.config.js",
-    "test:renderer": "jest --config jest.renderer.config.js",
+    "test:main": "jest --config config/jest.main.config.js",
+    "test:renderer": "jest --config config/jest.renderer.config.js",
     "test": "npm run test:main && npm run test:renderer",
     "db-reset": "rimraf ~/Library/Application\\ Support/moog-muse-manager/patches.db"
   },

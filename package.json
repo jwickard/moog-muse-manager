@@ -20,7 +20,13 @@
     "test:main": "jest --config config/jest.main.config.js",
     "test:renderer": "jest --config config/jest.renderer.config.js",
     "test": "npm run test:main && npm run test:renderer",
-    "db-reset": "rimraf ~/Library/Application\\ Support/moog-muse-manager/patches.db"
+    "db-reset": "rimraf ~/Library/Application\\ Support/moog-muse-manager/patches.db",
+    "workflow:run": "gh workflow run ci.yml",
+    "workflow:lint": "gh workflow run ci.yml -f job=lint",
+    "workflow:security": "gh workflow run ci.yml -f job=security",
+    "workflow:build": "gh workflow run ci.yml -f job=build",
+    "workflow:list": "gh run list",
+    "workflow:view": "gh run view"
   },
   "author": "",
   "license": "MIT",

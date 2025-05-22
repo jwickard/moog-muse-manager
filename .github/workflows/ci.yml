@@ -126,10 +126,19 @@ jobs:
         git config --global user.name 'github-actions[bot]'
         git config --global user.email 'github-actions[bot]@users.noreply.github.com'
 
+    - name: Debug Git Info
+      run: |
+        echo "Current branch: $(git branch --show-current)"
+        echo "All branches:"
+        git branch -a
+        echo "Git config:"
+        git config --list
+
     - name: Release
       env:
         GITHUB_TOKEN: ${{ secrets.RELEASE_TOKEN }}
-      run: npx semantic-release --config config/.releaserc.json
+        DEBUG: "semantic-release:*"
+      run: npx semantic-release --config config/.releaserc.json --debug
 
     - name: Download all artifacts
       uses: actions/download-artifact@v4

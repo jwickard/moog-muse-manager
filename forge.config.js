@@ -1,6 +1,7 @@
 module.exports = {
   packagerConfig: {
     asar: true,
+    icon: './assets/icon',
   },
   rebuildConfig: {},
   makers: [
@@ -49,7 +50,6 @@ module.exports = {
     {
       name: '@electron-forge/plugin-vite',
       config: {
-        // Vite configuration
         build: [
           {
             entry: 'src/main/main.ts',

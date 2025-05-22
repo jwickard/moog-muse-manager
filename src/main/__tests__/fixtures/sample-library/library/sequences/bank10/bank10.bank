@@ -1,0 +1,13 @@
+Version = 0;
+Settings : 
+{
+  ChainOneShot = false;
+  ChainOrder1 = -1;
+  ChainOrder2 = -1;
+  ChainOrder3 = -1;
+  ChainOrder4 = -1;
+  ChainOrder5 = -1;
+  ChainOrder6 = -1;
+  ChainOrder7 = -1;
+  ChainOrder8 = -1;
+};

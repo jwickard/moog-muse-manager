@@ -1,0 +1,1421 @@
+Version = 9;
+lfo1Rate : 
+{
+  timbreValues = [ 0.090923, 0.090923 ];
+};
+lfo2Rate : 
+{
+  timbreValues = [ 0.283459, 0.30248 ];
+};
+pitchLfoRate : 
+{
+  timbreValues = [ 0.321685, 0.2393 ];
+};
+pitchLfoAmount : 
+{
+  timbreValues = [ 0.135458, 0.14782 ];
+};
+glide : 
+{
+  timbreValues = [ 0.0, 0.0 ];
+};
+filter1Cutoff : 
+{
+  timbreValues = [ 0.905522, 0.910351 ];
+};
+filter2Cutoff : 
+{
+  timbreValues = [ 1.0, 1.0 ];
+};
+vcaPan : 
+{
+  timbreValues = [ 0.999501, 0.0 ];
+};
+vcaPanSpread : 
+{
+  timbreValues = [ 0.605676, 0.0 ];
+};
+delayPingPongMode : 
+{
+  value = true;
+};
+delayTimeMode : 
+{
+  value = false;
+};
+delayResolution : 
+{
+  value = "12bit";
+};
+delayCharacterFilter : 
+{
+  value = "on";
+};
+delayCharacterFilterType : 
+{
+  value = "dj";
+};
+delayCharacterMultiTap : 
+{
+  value = "off";
+};
+delayCharacterDiffusion : 
+{
+  value = "off";
+};
+delayCharacterDiffusionTime : 
+{
+  value = 6000.0;
+};
+delayHpf : 
+{
+  value = 20.0;
+};
+delayLpf : 
+{
+  value = 11750.0;
+};
+delayMainOutMix : 
+{
+  value = true;
+};
+delayHeadphoneOutMix : 
+{
+  value = true;
+};
+voiceControlDynamicVoiceAllocation : 
+{
+  value = true;
+};
+vcaEnvelopeVelocityAmount : 
+{
+  timbreValues = [ 1.0, 1.0 ];
+};
+vcaEnvelopeVelocityCurve : 
+{
+  timbreValues = [ "med", "med" ];
+};
+filterEnvelopeVelocityAmount : 
+{
+  timbreValues = [ 1.0, 1.0 ];
+};
+filterEnvelopeVelocityCurve : 
+{
+  timbreValues = [ "med", "med" ];
+};
+sustainOn : 
+{
+  timbreValues = [ true, false ];
+};
+pitchWheelRange : 
+{
+  timbreValues = [ "7", "0" ];
+};
+savedDisplayTimbre : 
+{
+  value = false;
+};
+savedLinkedEdit : 
+{
+  value = true;
+};
+pitchLfoWaveshape : 
+{
+  timbreValues = [ 0.506468, 0.506468 ];
+};
+pitchLfoEnvelope : 
+{
+  timbreValues = [ false, false ];
+};
+pitchLfoKbReset : 
+{
+  timbreValues = [ false, false ];
+};
+pitchLfoOsc1 : 
+{
+  timbreValues = [ true, true ];
+};
+pitchLfoOsc2 : 
+{
+  timbreValues = [ true, true ];
+};
+pitchLfoModulationOsc : 
+{
+  timbreValues = [ false, false ];
+};
+pitchLfoDetune : 
+{
+  timbreValues = [ false, false ];
+};
+pitchLfoDefaultAssignPolarity : 
+{
+  timbreValues = [ true, true ];
+};
+pitchLfoGlobalPerVoice : 
+{
+  timbreValues = [ false, false ];
+};
+pitchLfoSync : 
+{
+  timbreValues = [ false, false ];
+};
+pitchLfoSyncType : 
+{
+  timbreValues = [ "combined", "combined" ];
+};
+pitchLfoRateLowLimit : 
+{
+  timbreValues = [ 0.01, 0.01 ];
+};
+pitchLfoRateHighLimit : 
+{
+  timbreValues = [ 40.000004, 40.000004 ];
+};
+lfo1Waveshape : 
+{
+  timbreValues = [ "triangle", "triangle" ];
+};
+lfo1Amount : 
+{
+  timbreValues = [ 0.663742, 1.0 ];
+};
+lfo1KbReset : 
+{
+  timbreValues = [ false, false ];
+};
+lfo1UserWaveform : 
+{
+  timbreValues = [ "chebySine", "chebySine" ];
+};
+lfo1RateLowLimit : 
+{
+  timbreValues = [ 0.01, 0.01 ];
+};
+lfo1RateHighLimit : 
+{
+  timbreValues = [ 40.000004, 40.000004 ];
+};
+lfo1GlobalPerVoice : 
+{
+  timbreValues = [ true, true ];
+};
+lfo1DefaultAssignPolarity : 
+{
+  timbreValues = [ true, true ];
+};
+lfo1Invert : 
+{
+  timbreValues = [ false, false ];
+};
+lfo1RandomRateKnobBehavior : 
+{
+  timbreValues = [ false, false ];
+};
+lfo1Sync : 
+{
+  timbreValues = [ false, false ];
+};
+lfo1SyncType : 
+{
+  timbreValues = [ "combined", "combined" ];
+};
+lfo2Waveshape : 
+{
+  timbreValues = [ "triangle", "triangle" ];
+};
+lfo2Amount : 
+{
+  timbreValues = [ 0.074752, 0.03598 ];
+};
+lfo2KbReset : 
+{
+  timbreValues = [ false, false ];
+};
+lfo2UserWaveform : 
+{
+  timbreValues = [ "chebySine", "chebySine" ];
+};
+lfo2RateLowLimit : 
+{
+  timbreValues = [ 0.01, 0.01 ];
+};
+lfo2RateHighLimit : 
+{
+  timbreValues = [ 40.000004, 40.000004 ];
+};
+lfo2GlobalPerVoice : 
+{
+  timbreValues = [ true, true ];
+};
+lfo2DefaultAssignPolarity : 
+{
+  timbreValues = [ true, true ];
+};
+lfo2Invert : 
+{
+  timbreValues = [ false, false ];
+};
+lfo2RandomRateKnobBehavior : 
+{
+  timbreValues = [ false, false ];
+};
+lfo2Sync : 
+{
+  timbreValues = [ false, false ];
+};
+lfo2SyncType : 
+{
+  timbreValues = [ "combined", "combined" ];
+};
+modulationOscillatorPitch : 
+{
+  timbreValues = [ 0.421928, 0.37202 ];
+};
+modulationOscillatorWaveshape : 
+{
+  timbreValues = [ "sine", "sine" ];
+};
+modulationOscillatorAudio : 
+{
+  timbreValues = [ false, false ];
+};
+modulationOscillatorKbTrack : 
+{
+  timbreValues = [ false, false ];
+};
+modulationOscillatorKbReset : 
+{
+  timbreValues = [ false, false ];
+};
+modulationOscillatorUnipolar : 
+{
+  timbreValues = [ false, false ];
+};
+modulationOscillatorGlide : 
+{
+  timbreValues = [ true, true ];
+};
+modulationOscillatorPitchAmount : 
+{
+  timbreValues = [ 0.391592, 0.354712 ];
+};
+modulationOscillatorPitchOsc1 : 
+{
+  timbreValues = [ false, false ];
+};
+modulationOscillatorPitchOsc2 : 
+{
+  timbreValues = [ true, true ];
+};
+modulationOscillatorPwmAmount : 
+{
+  timbreValues = [ 0.0, 0.0 ];
+};
+modulationOscillatorPwmOsc1 : 
+{
+  timbreValues = [ false, false ];
+};
+modulationOscillatorPwmOsc2 : 
+{
+  timbreValues = [ false, false ];
+};
+modulationOscillatorFilterAmount : 
+{
+  timbreValues = [ 0.0, 0.0 ];
+};
+modulationOscillatorFilter1 : 
+{
+  timbreValues = [ false, false ];
+};
+modulationOscillatorFilter2 : 
+{
+  timbreValues = [ false, false ];
+};
+modulationOscillatorVcaAmount : 
+{
+  timbreValues = [ 0.0, 0.0 ];
+};
+modulationOscillatorVcaPan : 
+{
+  timbreValues = [ false, false ];
+};
+oscillatorsFmAmount : 
+{
+  timbreValues = [ 0.0, 0.0 ];
+};
+oscillator1FmMinAmount : 
+{
+  timbreValues = [ 0.0, 0.0 ];
+};
+oscillator1FmMaxAmount : 
+{
+  timbreValues = [ 1.0, 1.0 ];
+};
+oscillator2FmMinAmount : 
+{
+  timbreValues = [ 0.0, 0.0 ];
+};
+oscillator2FmMaxAmount : 
+{
+  timbreValues = [ 1.0, 1.0 ];
+};
+oscillatorsSync : 
+{
+  timbreValues = [ false, false ];
+};
+oscillator1Pitch : 
+{
+  timbreValues = [ 0.001967, 0.001967 ];
+};
+oscillator1PulseWidth : 
+{
+  timbreValues = [ 0.868104, 0.621765 ];
+};
+oscillator1TriRampAngle : 
+{
+  timbreValues = [ 0.999894, 0.99996 ];
+};
+oscillator1WaveshapeMix : 
+{
+  timbreValues = [ 0.0, 0.0 ];
+};
+oscillator1Octave : 
+{
+  timbreValues = [ "4'", "2'" ];
+};
+oscillator1Fm : 
+{
+  timbreValues = [ false, false ];
+};
+oscillator1Glide : 
+{
+  timbreValues = [ true, true ];
+};
+oscillator2Pitch : 
+{
+  timbreValues = [ 0.125132, 0.0 ];
+};
+oscillator2PulseWidth : 
+{
+  timbreValues = [ 0.545539, 0.999894 ];
+};
+oscillator2TriRampAngle : 
+{
+  timbreValues = [ 0.999894, 0.999894 ];
+};
+oscillator2WaveshapeMix : 
+{
+  timbreValues = [ 0.0, 0.0 ];
+};
+oscillator2Octave : 
+{
+  timbreValues = [ "4'", "2'" ];
+};
+oscillator2Fm : 
+{
+  timbreValues = [ false, false ];
+};
+oscillator2Glide : 
+{
+  timbreValues = [ true, true ];
+};
+mixerOsc1 : 
+{
+  timbreValues = [ 0.845369, 0.999568 ];
+};
+mixerRingMod : 
+{
+  timbreValues = [ 0.107926, 0.516616 ];
+};
+mixerOsc2 : 
+{
+  timbreValues = [ 0.431097, 0.999375 ];
+};
+mixerModOsc : 
+{
+  timbreValues = [ 0.0, 0.0 ];
+};
+mixerNoise : 
+{
+  timbreValues = [ 0.0, 0.0 ];
+};
+mixerClipping : 
+{
+  timbreValues = [ 0.17135, 0.104379 ];
+};
+filtersOrder : 
+{
+  timbreValues = [ "serial", "serial" ];
+};
+filtersLinkCutoffs : 
+{
+  timbreValues = [ false, false ];
+};
+filter1Resonance : 
+{
+  timbreValues = [ 0.672896, 0.716618 ];
+};
+filter1EnvelopeAmount : 
+{
+  timbreValues = [ -0.000288, -0.000288 ];
+};
+filter1HighPass : 
+{
+  timbreValues = [ true, true ];
+};
+filter1KbTrack : 
+{
+  timbreValues = [ "off", "off" ];
+};
+filter2Resonance : 
+{
+  timbreValues = [ 0.0, 0.0 ];
+};
+filter2EnvelopeAmount : 
+{
+  timbreValues = [ 0.13729, 0.13729 ];
+};
+filter2KbTrack : 
+{
+  timbreValues = [ "off", "off" ];
+};
+timbreVolume : 
+{
+  timbreValues = [ 0.999568, 0.999633 ];
+};
+vcaEnvelopeAmount : 
+{
+  timbreValues = [ 1.0, 1.0 ];
+};
+vcaOffset : 
+{
+  timbreValues = [ 0.0, 0.0 ];
+};
+vcaPanSpreadRandomize : 
+{
+  timbreValues = [ false, false ];
+};
+vcaPanSpreadFixedVoice : 
+{
+  timbreValues = [ false, false ];
+};
+vcaLfoPhaseSpread : 
+{
+  timbreValues = [ false, false ];
+};
+filterEnvelopeAttack : 
+{
+  timbreValues = [ 0.001, 0.001 ];
+};
+filterEnvelopeDecay : 
+{
+  timbreValues = [ 0.860271, 0.860271 ];
+};
+filterEnvelopeSustain : 
+{
+  timbreValues = [ 0.012025, 0.012025 ];
+};
+filterEnvelopeRelease : 
+{
+  timbreValues = [ 1.251809, 1.251809 ];
+};
+filterEnvelopeLoop : 
+{
+  timbreValues = [ false, false ];
+};
+filterEnvelopeVelocity : 
+{
+  timbreValues = [ false, false ];
+};
+filterEnvelopeAttackCurve : 
+{
+  timbreValues = [ -0.25, -0.25 ];
+};
+filterEnvelopeDecayCurve : 
+{
+  timbreValues = [ 0.62, 0.62 ];
+};
+filterEnvelopeReleaseCurve : 
+{
+  timbreValues = [ 0.62, 0.62 ];
+};
+filterEnvelopeVoiceStealingMode : 
+{
+  timbreValues = [ true, true ];
+};
+filterEnvelopeMultiTrig : 
+{
+  timbreValues = [ false, false ];
+};
+vcaEnvelopeAttack : 
+{
+  timbreValues = [ 5.747252, 5.747252 ];
+};
+vcaEnvelopeDecay : 
+{
+  timbreValues = [ 10.0, 7.975105 ];
+};
+vcaEnvelopeSustain : 
+{
+  timbreValues = [ 0.873858, 0.91752 ];
+};
+vcaEnvelopeRelease : 
+{
+  timbreValues = [ 2.244742, 2.255154 ];
+};
+vcaEnvelopeLoop : 
+{
+  timbreValues = [ false, false ];
+};
+vcaEnvelopeVelocity : 
+{
+  timbreValues = [ false, false ];
+};
+vcaEnvelopeAttackCurve : 
+{
+  timbreValues = [ -0.25, -0.25 ];
+};
+vcaEnvelopeDecayCurve : 
+{
+  timbreValues = [ 0.62, 0.62 ];
+};
+vcaEnvelopeReleaseCurve : 
+{
+  timbreValues = [ 0.62, 0.62 ];
+};
+vcaEnvelopeVoiceStealingMode : 
+{
+  timbreValues = [ true, true ];
+};
+vcaEnvelopeMultiTrig : 
+{
+  timbreValues = [ false, false ];
+};
+delayTimeLeft : 
+{
+  value = 0.362884;
+};
+delayTimeRight : 
+{
+  value = 0.407776;
+};
+delayFeedback : 
+{
+  value = 0.625978;
+};
+delayColor : 
+{
+  value = 0.540698;
+};
+delayMix : 
+{
+  value = 0.230982;
+};
+delaySync : 
+{
+  value = false;
+};
+delayLink : 
+{
+  value = false;
+};
+delayTimbreAlpha : 
+{
+  value = true;
+};
+delayTimbreBeta : 
+{
+  value = true;
+};
+delaySyncType : 
+{
+  value = "combined";
+};
+outputLowCut : 
+{
+  value = 0.4;
+};
+macro : 
+{
+  timbreValues = [ 0.0, 0.0 ];
+};
+macroDefaultAssignPolarity : 
+{
+  timbreValues = [ false, false ];
+};
+modWheelDefaultAssignPolarity : 
+{
+  timbreValues = [ false, false ];
+};
+arpClockDiv : 
+{
+  value = 0.503215;
+};
+arpOn : 
+{
+  timbreValues = [ false, false ];
+};
+arpFwBw : 
+{
+  value = false;
+};
+arpOrder : 
+{
+  value = "ord";
+};
+arpRange : 
+{
+  value = "1";
+};
+arpRestStyle : 
+{
+  value = false;
+};
+arpProbRestStyle : 
+{
+  value = false;
+};
+arpPatternDirection : 
+{
+  value = false;
+};
+arpPatternAlternate : 
+{
+  value = "off";
+};
+arpPatternLeapfrogFw : 
+{
+  value = 1;
+};
+arpPatternLeapfrogBw : 
+{
+  value = 0;
+};
+arpRandomAllowRepeats : 
+{
+  value = true;
+};
+arpSwing : 
+{
+  value = 0.50338;
+};
+arpGateLen : 
+{
+  value = 0.5;
+};
+arpRestStepLength : 
+{
+  value = 16;
+};
+arpRestSteps : 
+{
+  value = -1L;
+};
+arpGateProb : 
+{
+  value = 1.0;
+};
+arpClockDivType : 
+{
+  value = "straight";
+};
+arpOctaveMovement : 
+{
+  value = "pattern";
+};
+arpFwBwPivot : 
+{
+  value = false;
+};
+arpFwBwRandomLength : 
+{
+  value = 2;
+};
+arpLockLength : 
+{
+  value = 15;
+};
+voiceControlDetune : 
+{
+  timbreValues = [ 0.0, 0.0 ];
+};
+voiceControlUnison : 
+{
+  timbreValues = [ false, false ];
+};
+voiceControlMono : 
+{
+  timbreValues = [ false, false ];
+};
+timbreSplit : 
+{
+  value = false;
+};
+timbreStack : 
+{
+  value = true;
+};
+timbreEditAlpha : 
+{
+  value = true;
+};
+timbreEditBeta : 
+{
+  value = false;
+};
+voiceControlSplitPoint : 
+{
+  value = 48;
+};
+voiceControlTimbreACount : 
+{
+  value = 4;
+};
+voiceControlTimbreBCount : 
+{
+  value = 4;
+};
+glideType : 
+{
+  timbreValues = [ "lcr", "lcr" ];
+};
+modMapSource01 : 
+{
+  timbreValues = [ "vcaEnv", "vcaEnv" ];
+};
+modMapSource02 : 
+{
+  timbreValues = [ "modWheelUni", "modWheelUni" ];
+};
+modMapSource03 : 
+{
+  timbreValues = [ "macroUni", "macroUni" ];
+};
+modMapSource04 : 
+{
+  timbreValues = [ "macroUni", "macroUni" ];
+};
+modMapSource05 : 
+{
+  timbreValues = [ "macroUni", "macroUni" ];
+};
+modMapSource06 : 
+{
+  timbreValues = [ "none", "none" ];
+};
+modMapSource07 : 
+{
+  timbreValues = [ "none", "none" ];
+};
+modMapSource08 : 
+{
+  timbreValues = [ "none", "none" ];
+};
+modMapSource09 : 
+{
+  timbreValues = [ "none", "none" ];
+};
+modMapSource10 : 
+{
+  timbreValues = [ "none", "none" ];
+};
+modMapSource11 : 
+{
+  timbreValues = [ "none", "none" ];
+};
+modMapSource12 : 
+{
+  timbreValues = [ "none", "none" ];
+};
+modMapSource13 : 
+{
+  timbreValues = [ "none", "none" ];
+};
+modMapSource14 : 
+{
+  timbreValues = [ "none", "none" ];
+};
+modMapSource15 : 
+{
+  timbreValues = [ "none", "none" ];
+};
+modMapSource16 : 
+{
+  timbreValues = [ "none", "none" ];
+};
+modMapController01 : 
+{
+  timbreValues = [ "lfo2Bi", "lfo2Bi" ];
+};
+modMapController02 : 
+{
+  timbreValues = [ "none", "none" ];
+};
+modMapController03 : 
+{
+  timbreValues = [ "none", "none" ];
+};
+modMapController04 : 
+{
+  timbreValues = [ "none", "none" ];
+};
+modMapController05 : 
+{
+  timbreValues = [ "none", "none" ];
+};
+modMapController06 : 
+{
+  timbreValues = [ "none", "none" ];
+};
+modMapController07 : 
+{
+  timbreValues = [ "none", "none" ];
+};
+modMapController08 : 
+{
+  timbreValues = [ "none", "none" ];
+};
+modMapController09 : 
+{
+  timbreValues = [ "none", "none" ];
+};
+modMapController10 : 
+{
+  timbreValues = [ "none", "none" ];
+};
+modMapController11 : 
+{
+  timbreValues = [ "none", "none" ];
+};
+modMapController12 : 
+{
+  timbreValues = [ "none", "none" ];
+};
+modMapController13 : 
+{
+  timbreValues = [ "none", "none" ];
+};
+modMapController14 : 
+{
+  timbreValues = [ "none", "none" ];
+};
+modMapController15 : 
+{
+  timbreValues = [ "none", "none" ];
+};
+modMapController16 : 
+{
+  timbreValues = [ "none", "none" ];
+};
+modMapControllerAmount01 : 
+{
+  timbreValues = [ 0.02, 0.03 ];
+};
+modMapControllerAmount02 : 
+{
+  timbreValues = [ 0.0, 0.0 ];
+};
+modMapControllerAmount03 : 
+{
+  timbreValues = [ 0.0, 0.0 ];
+};
+modMapControllerAmount04 : 
+{
+  timbreValues = [ 0.0, 0.0 ];
+};
+modMapControllerAmount05 : 
+{
+  timbreValues = [ 0.0, 0.0 ];
+};
+modMapControllerAmount06 : 
+{
+  timbreValues = [ 0.0, 0.0 ];
+};
+modMapControllerAmount07 : 
+{
+  timbreValues = [ 0.0, 0.0 ];
+};
+modMapControllerAmount08 : 
+{
+  timbreValues = [ 0.0, 0.0 ];
+};
+modMapControllerAmount09 : 
+{
+  timbreValues = [ 0.0, 0.0 ];
+};
+modMapControllerAmount10 : 
+{
+  timbreValues = [ 0.0, 0.0 ];
+};
+modMapControllerAmount11 : 
+{
+  timbreValues = [ 0.0, 0.0 ];
+};
+modMapControllerAmount12 : 
+{
+  timbreValues = [ 0.0, 0.0 ];
+};
+modMapControllerAmount13 : 
+{
+  timbreValues = [ 0.0, 0.0 ];
+};
+modMapControllerAmount14 : 
+{
+  timbreValues = [ 0.0, 0.0 ];
+};
+modMapControllerAmount15 : 
+{
+  timbreValues = [ 0.0, 0.0 ];
+};
+modMapControllerAmount16 : 
+{
+  timbreValues = [ 0.0, 0.0 ];
+};
+modMapFunction01 : 
+{
+  timbreValues = [ "none", "none" ];
+};
+modMapFunction02 : 
+{
+  timbreValues = [ "none", "none" ];
+};
+modMapFunction03 : 
+{
+  timbreValues = [ "none", "none" ];
+};
+modMapFunction04 : 
+{
+  timbreValues = [ "none", "none" ];
+};
+modMapFunction05 : 
+{
+  timbreValues = [ "none", "none" ];
+};
+modMapFunction06 : 
+{
+  timbreValues = [ "none", "none" ];
+};
+modMapFunction07 : 
+{
+  timbreValues = [ "none", "none" ];
+};
+modMapFunction08 : 
+{
+  timbreValues = [ "none", "none" ];
+};
+modMapFunction09 : 
+{
+  timbreValues = [ "none", "none" ];
+};
+modMapFunction10 : 
+{
+  timbreValues = [ "none", "none" ];
+};
+modMapFunction11 : 
+{
+  timbreValues = [ "none", "none" ];
+};
+modMapFunction12 : 
+{
+  timbreValues = [ "none", "none" ];
+};
+modMapFunction13 : 
+{
+  timbreValues = [ "none", "none" ];
+};
+modMapFunction14 : 
+{
+  timbreValues = [ "none", "none" ];
+};
+modMapFunction15 : 
+{
+  timbreValues = [ "none", "none" ];
+};
+modMapFunction16 : 
+{
+  timbreValues = [ "none", "none" ];
+};
+modMapFunctionParameter01 : 
+{
+  timbreValues = [ 0.0, 0.0 ];
+};
+modMapFunctionParameter02 : 
+{
+  timbreValues = [ 0.0, 0.0 ];
+};
+modMapFunctionParameter03 : 
+{
+  timbreValues = [ 0.0, 0.0 ];
+};
+modMapFunctionParameter04 : 
+{
+  timbreValues = [ 0.0, 0.0 ];
+};
+modMapFunctionParameter05 : 
+{
+  timbreValues = [ 0.0, 0.0 ];
+};
+modMapFunctionParameter06 : 
+{
+  timbreValues = [ 0.0, 0.0 ];
+};
+modMapFunctionParameter07 : 
+{
+  timbreValues = [ 0.0, 0.0 ];
+};
+modMapFunctionParameter08 : 
+{
+  timbreValues = [ 0.0, 0.0 ];
+};
+modMapFunctionParameter09 : 
+{
+  timbreValues = [ 0.0, 0.0 ];
+};
+modMapFunctionParameter10 : 
+{
+  timbreValues = [ 0.0, 0.0 ];
+};
+modMapFunctionParameter11 : 
+{
+  timbreValues = [ 0.0, 0.0 ];
+};
+modMapFunctionParameter12 : 
+{
+  timbreValues = [ 0.0, 0.0 ];
+};
+modMapFunctionParameter13 : 
+{
+  timbreValues = [ 0.0, 0.0 ];
+};
+modMapFunctionParameter14 : 
+{
+  timbreValues = [ 0.0, 0.0 ];
+};
+modMapFunctionParameter15 : 
+{
+  timbreValues = [ 0.0, 0.0 ];
+};
+modMapFunctionParameter16 : 
+{
+  timbreValues = [ 0.0, 0.0 ];
+};
+modMapFunctionDest01 : 
+{
+  timbreValues = [ "source", "source" ];
+};
+modMapFunctionDest02 : 
+{
+  timbreValues = [ "source", "source" ];
+};
+modMapFunctionDest03 : 
+{
+  timbreValues = [ "source", "source" ];
+};
+modMapFunctionDest04 : 
+{
+  timbreValues = [ "source", "source" ];
+};
+modMapFunctionDest05 : 
+{
+  timbreValues = [ "source", "source" ];
+};
+modMapFunctionDest06 : 
+{
+  timbreValues = [ "source", "source" ];
+};
+modMapFunctionDest07 : 
+{
+  timbreValues = [ "source", "source" ];
+};
+modMapFunctionDest08 : 
+{
+  timbreValues = [ "source", "source" ];
+};
+modMapFunctionDest09 : 
+{
+  timbreValues = [ "source", "source" ];
+};
+modMapFunctionDest10 : 
+{
+  timbreValues = [ "source", "source" ];
+};
+modMapFunctionDest11 : 
+{
+  timbreValues = [ "source", "source" ];
+};
+modMapFunctionDest12 : 
+{
+  timbreValues = [ "source", "source" ];
+};
+modMapFunctionDest13 : 
+{
+  timbreValues = [ "source", "source" ];
+};
+modMapFunctionDest14 : 
+{
+  timbreValues = [ "source", "source" ];
+};
+modMapFunctionDest15 : 
+{
+  timbreValues = [ "source", "source" ];
+};
+modMapFunctionDest16 : 
+{
+  timbreValues = [ "source", "source" ];
+};
+modMapDest01 : 
+{
+  timbreValues = [ "osc1Freq", "osc2Freq" ];
+};
+modMapDest02 : 
+{
+  timbreValues = [ "pitchLfoAmount", "pitchLfoAmount" ];
+};
+modMapDest03 : 
+{
+  timbreValues = [ "kb", "kb" ];
+};
+modMapDest04 : 
+{
+  timbreValues = [ "modOscPitchAmount", "modOscPitchAmount" ];
+};
+modMapDest05 : 
+{
+  timbreValues = [ "vcaPanSpread", "vcaPanSpread" ];
+};
+modMapDest06 : 
+{
+  timbreValues = [ "none", "none" ];
+};
+modMapDest07 : 
+{
+  timbreValues = [ "none", "none" ];
+};
+modMapDest08 : 
+{
+  timbreValues = [ "none", "none" ];
+};
+modMapDest09 : 
+{
+  timbreValues = [ "none", "none" ];
+};
+modMapDest10 : 
+{
+  timbreValues = [ "none", "none" ];
+};
+modMapDest11 : 
+{
+  timbreValues = [ "none", "none" ];
+};
+modMapDest12 : 
+{
+  timbreValues = [ "none", "none" ];
+};
+modMapDest13 : 
+{
+  timbreValues = [ "none", "none" ];
+};
+modMapDest14 : 
+{
+  timbreValues = [ "none", "none" ];
+};
+modMapDest15 : 
+{
+  timbreValues = [ "none", "none" ];
+};
+modMapDest16 : 
+{
+  timbreValues = [ "none", "none" ];
+};
+modMapFunctionDepth01 : 
+{
+  timbreValues = [ 0.0, 0.0 ];
+};
+modMapFunctionDepth02 : 
+{
+  timbreValues = [ 0.22, 0.22 ];
+};
+modMapFunctionDepth03 : 
+{
+  timbreValues = [ 0.25, 0.25 ];
+};
+modMapFunctionDepth04 : 
+{
+  timbreValues = [ 0.04, 0.04 ];
+};
+modMapFunctionDepth05 : 
+{
+  timbreValues = [ 1.0, 1.0 ];
+};
+modMapFunctionDepth06 : 
+{
+  timbreValues = [ 0.0, 0.0 ];
+};
+modMapFunctionDepth07 : 
+{
+  timbreValues = [ 0.0, 0.0 ];
+};
+modMapFunctionDepth08 : 
+{
+  timbreValues = [ 0.0, 0.0 ];
+};
+modMapFunctionDepth09 : 
+{
+  timbreValues = [ 0.0, 0.0 ];
+};
+modMapFunctionDepth10 : 
+{
+  timbreValues = [ 0.0, 0.0 ];
+};
+modMapFunctionDepth11 : 
+{
+  timbreValues = [ 0.0, 0.0 ];
+};
+modMapFunctionDepth12 : 
+{
+  timbreValues = [ 0.0, 0.0 ];
+};
+modMapFunctionDepth13 : 
+{
+  timbreValues = [ 0.0, 0.0 ];
+};
+modMapFunctionDepth14 : 
+{
+  timbreValues = [ 0.0, 0.0 ];
+};
+modMapFunctionDepth15 : 
+{
+  timbreValues = [ 0.0, 0.0 ];
+};
+modMapFunctionDepth16 : 
+{
+  timbreValues = [ 0.0, 0.0 ];
+};
+modMapSolo01 : 
+{
+  timbreValues = [ false, false ];
+};
+modMapSolo02 : 
+{
+  timbreValues = [ false, false ];
+};
+modMapSolo03 : 
+{
+  timbreValues = [ false, false ];
+};
+modMapSolo04 : 
+{
+  timbreValues = [ false, false ];
+};
+modMapSolo05 : 
+{
+  timbreValues = [ false, false ];
+};
+modMapSolo06 : 
+{
+  timbreValues = [ false, false ];
+};
+modMapSolo07 : 
+{
+  timbreValues = [ false, false ];
+};
+modMapSolo08 : 
+{
+  timbreValues = [ false, false ];
+};
+modMapSolo09 : 
+{
+  timbreValues = [ false, false ];
+};
+modMapSolo10 : 
+{
+  timbreValues = [ false, false ];
+};
+modMapSolo11 : 
+{
+  timbreValues = [ false, false ];
+};
+modMapSolo12 : 
+{
+  timbreValues = [ false, false ];
+};
+modMapSolo13 : 
+{
+  timbreValues = [ false, false ];
+};
+modMapSolo14 : 
+{
+  timbreValues = [ false, false ];
+};
+modMapSolo15 : 
+{
+  timbreValues = [ false, false ];
+};
+modMapSolo16 : 
+{
+  timbreValues = [ false, false ];
+};
+modMapMute01 : 
+{
+  timbreValues = [ false, false ];
+};
+modMapMute02 : 
+{
+  timbreValues = [ false, false ];
+};
+modMapMute03 : 
+{
+  timbreValues = [ false, false ];
+};
+modMapMute04 : 
+{
+  timbreValues = [ false, false ];
+};
+modMapMute05 : 
+{
+  timbreValues = [ false, false ];
+};
+modMapMute06 : 
+{
+  timbreValues = [ false, false ];
+};
+modMapMute07 : 
+{
+  timbreValues = [ false, false ];
+};
+modMapMute08 : 
+{
+  timbreValues = [ false, false ];
+};
+modMapMute09 : 
+{
+  timbreValues = [ false, false ];
+};
+modMapMute10 : 
+{
+  timbreValues = [ false, false ];
+};
+modMapMute11 : 
+{
+  timbreValues = [ false, false ];
+};
+modMapMute12 : 
+{
+  timbreValues = [ false, false ];
+};
+modMapMute13 : 
+{
+  timbreValues = [ false, false ];
+};
+modMapMute14 : 
+{
+  timbreValues = [ false, false ];
+};
+modMapMute15 : 
+{
+  timbreValues = [ false, false ];
+};
+modMapMute16 : 
+{
+  timbreValues = [ false, false ];
+};

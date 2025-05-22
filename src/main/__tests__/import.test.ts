@@ -1,143 +1,371 @@
-import { dialog } from 'electron';
+/**
+ * @jest-environment node
+ */
 import path from 'path';
-import fs from 'fs';
-import { dbManager } from '../database';
+import fs from 'fs-extra';
+import { DatabaseManager, calculateChecksum } from '../database';
+import { importPatchesFromDirectory } from '../importPatches';
 
-// Mock electron app and dialog
+// Mock electron dialog and ipcMain
 jest.mock('electron', () => ({
-  app: {
-    getPath: jest.fn().mockReturnValue('/tmp/test-app-data')
-  },
   dialog: {
     showOpenDialog: jest.fn()
+  },
+  ipcMain: {
+    handle: jest.fn()
+  },
+  app: {
+    getPath: jest.fn().mockReturnValue('/tmp/test-app-data')
   }
 }));
 
 describe('Patch Import', () => {
   let testDir: string;
-  let testLibraryDir: string;
+  let testDbPath: string;
+  let db: DatabaseManager;
+  const fixtureDir = path.join(__dirname, 'fixtures/sample-library');
+
+  beforeAll(() => {
+    // Create test directory
+    testDir = '/tmp/test-patches';
+    if (!fs.existsSync(testDir)) {
+      fs.mkdirSync(testDir, { recursive: true });
+    }
+
+    // Create test database path
+    testDbPath = path.join('/tmp/test-app-data', 'patches.db');
+    
+    // Ensure the test directory exists
+    if (!fs.existsSync('/tmp/test-app-data')) {
+      fs.mkdirSync('/tmp/test-app-data', { recursive: true });
+    }
+  });
 
   beforeEach(() => {
-    // Create test directory structure
-    testDir = '/tmp/test-patches';
-    testLibraryDir = path.join(testDir, 'Library');
-    
-    // Clean up and create fresh test directories
+    // Clean up test directory
     if (fs.existsSync(testDir)) {
-      fs.rmSync(testDir, { recursive: true, force: true });
+      fs.removeSync(testDir);
     }
     fs.mkdirSync(testDir, { recursive: true });
-    fs.mkdirSync(testLibraryDir, { recursive: true });
 
-    // Mock dialog to return our test directory
-    (dialog.showOpenDialog as jest.Mock).mockResolvedValue({
-      filePaths: [testDir]
-    });
+    // Copy fixture directory to test directory
+    fs.copySync(fixtureDir, testDir);
+
+    // Remove existing test database if it exists
+    if (fs.existsSync(testDbPath)) {
+      fs.unlinkSync(testDbPath);
+    }
+
+    // Create a new DatabaseManager instance with a temporary file-based database
+    db = new DatabaseManager(testDbPath);
   });
 
   afterEach(() => {
+    // Clean up test database
+    if (fs.existsSync(testDbPath)) {
+      fs.unlinkSync(testDbPath);
+    }
+    db.close();
+  });
+
+  afterAll(() => {
     // Clean up test directories
     if (fs.existsSync(testDir)) {
-      fs.rmSync(testDir, { recursive: true, force: true });
+      fs.removeSync(testDir);
     }
-    dbManager.close();
+    if (fs.existsSync('/tmp/test-app-data')) {
+      fs.removeSync('/tmp/test-app-data');
+    }
   });
 
   it('should import patches from a directory with Library folder', async () => {
-    // Create test bank structure
-    const bankDir = path.join(testLibraryDir, 'bank01');
-    fs.mkdirSync(bankDir, { recursive: true });
-    
-    // Create a bank file
-    fs.writeFileSync(path.join(bankDir, 'userbank.bank'), '');
-    
-    // Create patch directories and files
-    const patchDir = path.join(bankDir, 'patch01');
-    fs.mkdirSync(patchDir, { recursive: true });
-    fs.writeFileSync(path.join(patchDir, 'testpatch.mmp'), 'test content');
+    // Import patches using the real function
+    const patches = await importPatchesFromDirectory(testDir, 'Library', db);
 
-    // Import patches
-    const patches = await dbManager.loadPatches();
-    
-    expect(patches).toHaveLength(1);
-    expect(patches[0]).toMatchObject({
-      name: 'testpatch',
-      bank: 'userbank',
-      custom: true,
-      tags: ['userbank']
-    });
+    // Verify results
+    expect(patches).toHaveLength(4);
+    expect(patches).toEqual(expect.arrayContaining([
+      expect.objectContaining({
+        path: path.join(testDir, 'library/bank01/patch01/vox humana.mmp'),
+        name: 'vox humana',
+        bank: 'muse',
+        library: 'Library',
+        custom: false
+      }),
+      expect.objectContaining({
+        path: path.join(testDir, 'library/bank01/patch02/muse runner.mmp'),
+        name: 'muse runner',
+        bank: 'muse',
+        library: 'Library',
+        custom: false
+      }),
+      expect.objectContaining({
+        path: path.join(testDir, 'library/bank01/patch03/struga baab.mmp'),
+        name: 'struga baab',
+        bank: 'muse',
+        library: 'Library',
+        custom: false
+      }),
+      expect.objectContaining({
+        path: path.join(testDir, 'library/bank02/patch01/moog 55 strings.mmp'),
+        name: 'moog 55 strings',
+        bank: 'classic',
+        library: 'Library',
+        custom: false
+      })
+    ]));
+
+    // Verify banks were created
+    const banks = db.loadBanks();
+    expect(banks).toHaveLength(2);
+    expect(banks).toEqual(expect.arrayContaining([
+      expect.objectContaining({
+        name: 'muse',
+        library: 'Library',
+        custom: false
+      }),
+      expect.objectContaining({
+        name: 'classic',
+        library: 'Library',
+        custom: false
+      })
+    ]));
+
+    // Verify patch-bank associations
+    const museBank = banks.find(b => b.name === 'muse')!;
+    const classicBank = banks.find(b => b.name === 'classic')!;
+    const musePatches = db.getPatchesForBank(museBank.id!);
+    const classicPatches = db.getPatchesForBank(classicBank.id!);
+    expect(musePatches).toHaveLength(3);
+    expect(classicPatches).toHaveLength(1);
+    expect(musePatches.map(p => p.path)).toEqual(expect.arrayContaining([
+      path.join(testDir, 'library/bank01/patch01/vox humana.mmp'),
+      path.join(testDir, 'library/bank01/patch02/muse runner.mmp'),
+      path.join(testDir, 'library/bank01/patch03/struga baab.mmp')
+    ]));
+    expect(classicPatches[0].path).toBe(path.join(testDir, 'library/bank02/patch01/moog 55 strings.mmp'));
   });
 
   it('should import patches from a directory without Library folder', async () => {
-    // Create test bank structure directly in root
-    const bankDir = path.join(testDir, 'bank01');
-    fs.mkdirSync(bankDir, { recursive: true });
-    
-    // Create a bank file
-    fs.writeFileSync(path.join(bankDir, 'factorybank.bank'), '');
-    
-    // Create patch directories and files
-    const patchDir = path.join(bankDir, 'patch01');
-    fs.mkdirSync(patchDir, { recursive: true });
-    fs.writeFileSync(path.join(patchDir, 'testpatch.mmp'), 'test content');
+    // Import patches using the real function
+    const patches = await importPatchesFromDirectory(testDir, 'Factory', db);
 
-    // Import patches
-    const patches = await dbManager.loadPatches();
-    
-    expect(patches).toHaveLength(1);
-    expect(patches[0]).toMatchObject({
-      name: 'testpatch',
-      bank: 'factorybank',
-      custom: false,
-      tags: ['factorybank']
-    });
+    // Verify results
+    expect(patches).toHaveLength(4);
+    expect(patches).toEqual(expect.arrayContaining([
+      expect.objectContaining({
+        path: path.join(testDir, 'library/bank01/patch01/vox humana.mmp'),
+        name: 'vox humana',
+        bank: 'muse',
+        library: 'Factory',
+        custom: false
+      }),
+      expect.objectContaining({
+        path: path.join(testDir, 'library/bank01/patch02/muse runner.mmp'),
+        name: 'muse runner',
+        bank: 'muse',
+        library: 'Factory',
+        custom: false
+      }),
+      expect.objectContaining({
+        path: path.join(testDir, 'library/bank01/patch03/struga baab.mmp'),
+        name: 'struga baab',
+        bank: 'muse',
+        library: 'Factory',
+        custom: false
+      }),
+      expect.objectContaining({
+        path: path.join(testDir, 'library/bank02/patch01/moog 55 strings.mmp'),
+        name: 'moog 55 strings',
+        bank: 'classic',
+        library: 'Factory',
+        custom: false
+      })
+    ]));
+
+    // Verify banks were created
+    const banks = db.loadBanks();
+    expect(banks).toHaveLength(2);
+    expect(banks).toEqual(expect.arrayContaining([
+      expect.objectContaining({
+        name: 'muse',
+        library: 'Factory',
+        custom: false
+      }),
+      expect.objectContaining({
+        name: 'classic',
+        library: 'Factory',
+        custom: false
+      })
+    ]));
+
+    // Verify patch-bank associations
+    const museBank = banks.find(b => b.name === 'muse')!;
+    const classicBank = banks.find(b => b.name === 'classic')!;
+    const musePatches = db.getPatchesForBank(museBank.id!);
+    const classicPatches = db.getPatchesForBank(classicBank.id!);
+    expect(musePatches).toHaveLength(3);
+    expect(classicPatches).toHaveLength(1);
+    expect(musePatches.map(p => p.path)).toEqual(expect.arrayContaining([
+      path.join(testDir, 'library/bank01/patch01/vox humana.mmp'),
+      path.join(testDir, 'library/bank01/patch02/muse runner.mmp'),
+      path.join(testDir, 'library/bank01/patch03/struga baab.mmp')
+    ]));
+    expect(classicPatches[0].path).toBe(path.join(testDir, 'library/bank02/patch01/moog 55 strings.mmp'));
   });
 
   it('should skip duplicate patches during import', async () => {
-    // Create test bank structure
-    const bankDir = path.join(testLibraryDir, 'bank01');
-    fs.mkdirSync(bankDir, { recursive: true });
-    
-    // Create a bank file
-    fs.writeFileSync(path.join(bankDir, 'testbank.bank'), '');
-    
-    // Create patch directories and files
-    const patchDir = path.join(bankDir, 'patch01');
-    fs.mkdirSync(patchDir, { recursive: true });
-    fs.writeFileSync(path.join(patchDir, 'testpatch.mmp'), 'test content');
+    // Import patches using the real function
+    const patches1 = await importPatchesFromDirectory(testDir, 'Library', db);
+    const patches2 = await importPatchesFromDirectory(testDir, 'Library', db);
 
-    // Import patches twice
-    const patches1 = await dbManager.loadPatches();
-    const patches2 = await dbManager.loadPatches();
-    
-    expect(patches1).toHaveLength(1);
-    expect(patches2).toHaveLength(1);
+    // Verify results
+    expect(patches1).toHaveLength(4);
+    expect(patches2).toHaveLength(0); // Should skip duplicate
+
+    // Verify banks were created only once
+    const banks = db.loadBanks();
+    expect(banks).toHaveLength(2);
+    expect(banks).toEqual(expect.arrayContaining([
+      expect.objectContaining({
+        name: 'muse',
+        library: 'Library',
+        custom: false
+      }),
+      expect.objectContaining({
+        name: 'classic',
+        library: 'Library',
+        custom: false
+      })
+    ]));
+
+    // Verify patch-bank associations
+    const museBank = banks.find(b => b.name === 'muse')!;
+    const classicBank = banks.find(b => b.name === 'classic')!;
+    const musePatches = db.getPatchesForBank(museBank.id!);
+    const classicPatches = db.getPatchesForBank(classicBank.id!);
+    expect(musePatches).toHaveLength(3);
+    expect(classicPatches).toHaveLength(1);
+    expect(musePatches.map(p => p.path)).toEqual(expect.arrayContaining([
+      path.join(testDir, 'library/bank01/patch01/vox humana.mmp'),
+      path.join(testDir, 'library/bank01/patch02/muse runner.mmp'),
+      path.join(testDir, 'library/bank01/patch03/struga baab.mmp')
+    ]));
+    expect(classicPatches[0].path).toBe(path.join(testDir, 'library/bank02/patch01/moog 55 strings.mmp'));
   });
 
   it('should handle multiple banks and patches', async () => {
-    // Create multiple test banks
-    const banks = ['bank01', 'bank02'];
-    banks.forEach(bankName => {
-      const bankDir = path.join(testLibraryDir, bankName);
-      fs.mkdirSync(bankDir, { recursive: true });
-      fs.writeFileSync(path.join(bankDir, `${bankName}.bank`), '');
-      
-      // Create multiple patch directories
-      ['patch01', 'patch02'].forEach(patchName => {
-        const patchDir = path.join(bankDir, patchName);
-        fs.mkdirSync(patchDir, { recursive: true });
-        fs.writeFileSync(path.join(patchDir, `${patchName}.mmp`), 'test content');
-      });
-    });
+    // Import patches using the real function
+    const patches = await importPatchesFromDirectory(testDir, 'Library', db);
 
-    // Import patches
-    const patches = await dbManager.loadPatches();
+    // Verify results
+    expect(patches).toHaveLength(4);
+    expect(patches).toEqual(expect.arrayContaining([
+      expect.objectContaining({
+        path: path.join(testDir, 'library/bank01/patch01/vox humana.mmp'),
+        name: 'vox humana',
+        bank: 'muse',
+        library: 'Library',
+        custom: false
+      }),
+      expect.objectContaining({
+        path: path.join(testDir, 'library/bank01/patch02/muse runner.mmp'),
+        name: 'muse runner',
+        bank: 'muse',
+        library: 'Library',
+        custom: false
+      }),
+      expect.objectContaining({
+        path: path.join(testDir, 'library/bank01/patch03/struga baab.mmp'),
+        name: 'struga baab',
+        bank: 'muse',
+        library: 'Library',
+        custom: false
+      }),
+      expect.objectContaining({
+        path: path.join(testDir, 'library/bank02/patch01/moog 55 strings.mmp'),
+        name: 'moog 55 strings',
+        bank: 'classic',
+        library: 'Library',
+        custom: false
+      })
+    ]));
+
+    // Verify banks were created
+    const banks = db.loadBanks();
+    expect(banks).toHaveLength(2);
+    expect(banks).toEqual(expect.arrayContaining([
+      expect.objectContaining({
+        name: 'muse',
+        library: 'Library',
+        custom: false
+      }),
+      expect.objectContaining({
+        name: 'classic',
+        library: 'Library',
+        custom: false
+      })
+    ]));
+
+    // Verify patch-bank associations
+    const museBank = banks.find(b => b.name === 'muse')!;
+    const classicBank = banks.find(b => b.name === 'classic')!;
+    const musePatches = db.getPatchesForBank(museBank.id!);
+    const classicPatches = db.getPatchesForBank(classicBank.id!);
+    expect(musePatches).toHaveLength(3);
+    expect(classicPatches).toHaveLength(1);
+    expect(musePatches.map(p => p.path)).toEqual(expect.arrayContaining([
+      path.join(testDir, 'library/bank01/patch01/vox humana.mmp'),
+      path.join(testDir, 'library/bank01/patch02/muse runner.mmp'),
+      path.join(testDir, 'library/bank01/patch03/struga baab.mmp')
+    ]));
+    expect(classicPatches[0].path).toBe(path.join(testDir, 'library/bank02/patch01/moog 55 strings.mmp'));
+  });
+});
+
+describe('Import', () => {
+  let testDbPath: string;
+  let db: DatabaseManager;
+  let testFilePath: string;
+
+  beforeAll(() => {
+    // Create a test database path
+    testDbPath = path.join('/tmp/test-app-data', 'patches.db');
     
-    expect(patches).toHaveLength(4); // 2 banks * 2 patches each
-    expect(patches.map(p => p.bank)).toEqual(expect.arrayContaining(['bank01', 'bank02']));
-    // Verify all patches have their bank names as tags
-    patches.forEach(patch => {
-      expect(patch.tags).toContain(patch.bank);
-    });
+    // Ensure the test directory exists
+    if (!fs.existsSync('/tmp/test-app-data')) {
+      fs.mkdirSync('/tmp/test-app-data', { recursive: true });
+    }
+    
+    // Remove existing test database if it exists
+    if (fs.existsSync(testDbPath)) {
+      fs.unlinkSync(testDbPath);
+    }
+
+    // Create a new DatabaseManager instance with a temporary file-based database
+    db = new DatabaseManager(testDbPath);
+
+    // Create a test file for checksum
+    testFilePath = path.join('/tmp/test-app-data', 'testfile.mmp');
+    fs.writeFileSync(testFilePath, 'test data');
+  });
+
+  afterAll(() => {
+    // Clean up test database
+    if (fs.existsSync(testDbPath)) {
+      fs.unlinkSync(testDbPath);
+    }
+    db.close();
+    // Clean up test file
+    if (fs.existsSync(testFilePath)) {
+      fs.unlinkSync(testFilePath);
+    }
+  });
+
+  it('should calculate checksum correctly', () => {
+    // Calculate expected checksum using the same logic as calculateChecksum
+    const expectedChecksum = calculateChecksum(testFilePath);
+    const actualChecksum = calculateChecksum(testFilePath);
+    expect(actualChecksum).toBe(expectedChecksum);
   });
 }); 

@@ -1,4 +1,7 @@
-import { dbManager, Patch } from '../database';
+/**
+ * @jest-environment node
+ */
+import { DatabaseManager, Patch } from '../database';
 import path from 'path';
 import fs from 'fs';
 
@@ -11,8 +14,9 @@ jest.mock('electron', () => ({
 
 describe('DatabaseManager', () => {
   let testDbPath: string;
+  let db: DatabaseManager;
 
-  beforeEach(() => {
+  beforeAll(() => {
     // Create a test database path
     testDbPath = path.join('/tmp/test-app-data', 'patches.db');
     
@@ -20,11 +24,16 @@ describe('DatabaseManager', () => {
     if (!fs.existsSync('/tmp/test-app-data')) {
       fs.mkdirSync('/tmp/test-app-data', { recursive: true });
     }
-    
+  });
+
+  beforeEach(() => {
     // Remove existing test database if it exists
     if (fs.existsSync(testDbPath)) {
       fs.unlinkSync(testDbPath);
     }
+
+    // Create a new DatabaseManager instance with a temporary file-based database
+    db = new DatabaseManager(testDbPath);
   });
 
   afterEach(() => {
@@ -32,11 +41,18 @@ describe('DatabaseManager', () => {
     if (fs.existsSync(testDbPath)) {
       fs.unlinkSync(testDbPath);
     }
-    dbManager.close();
+    db.close();
+  });
+
+  afterAll(() => {
+    // Clean up test directory
+    if (fs.existsSync('/tmp/test-app-data')) {
+      fs.rmSync('/tmp/test-app-data', { recursive: true, force: true });
+    }
   });
 
   it('should create a new database with patches table', () => {
-    const patches = dbManager.loadPatches();
+    const patches = db.loadPatches();
     expect(patches).toEqual([]);
   });
 
@@ -53,8 +69,8 @@ describe('DatabaseManager', () => {
       custom: true
     };
 
-    dbManager.savePatch(patch);
-    const loadedPatches = dbManager.loadPatches();
+    db.savePatch(patch);
+    const loadedPatches = db.loadPatches();
     
     expect(loadedPatches).toHaveLength(1);
     expect(loadedPatches[0]).toEqual(patch);
@@ -67,8 +83,8 @@ describe('DatabaseManager', () => {
       custom: false
     };
 
-    const bankId = dbManager.saveBank(bank);
-    const loadedBanks = dbManager.loadBanks();
+    const bankId = db.saveBank(bank);
+    const loadedBanks = db.loadBanks();
 
     expect(loadedBanks).toHaveLength(1);
     expect(loadedBanks[0]).toEqual({
@@ -78,14 +94,16 @@ describe('DatabaseManager', () => {
   });
 
   it('should associate patches with banks', () => {
+    // First save the bank
     const bank = {
       name: 'Test Bank',
       library: 'Test Library',
       custom: false
     };
 
-    const bankId = dbManager.saveBank(bank);
+    const bankId = db.saveBank(bank);
 
+    // Then save the patch
     const patch: Patch = {
       path: '/test/path/patch1.mmp',
       name: 'Test Patch',
@@ -98,8 +116,17 @@ describe('DatabaseManager', () => {
       custom: false
     };
 
-    dbManager.savePatch(patch);
-    const patches = dbManager.getPatchesForBank(bankId);
+    db.savePatch(patch);
+
+    // Associate the patch with the bank
+    const stmt = db['db'].prepare(`
+      INSERT INTO patch_banks (patch_path, bank_id)
+      VALUES (?, ?)
+    `);
+    stmt.run(patch.path, bankId);
+
+    // Get patches for the bank
+    const patches = db.getPatchesForBank(bankId);
 
     expect(patches).toHaveLength(1);
     expect(patches[0]).toEqual(patch);
@@ -112,11 +139,11 @@ describe('DatabaseManager', () => {
       custom: false
     };
 
-    const bankId1 = dbManager.saveBank(bank);
-    const bankId2 = dbManager.saveBank(bank);
+    const bankId1 = db.saveBank(bank);
+    const bankId2 = db.saveBank(bank);
 
     expect(bankId1).toBe(bankId2);
-    expect(dbManager.loadBanks()).toHaveLength(1);
+    expect(db.loadBanks()).toHaveLength(1);
   });
 
   it('should save and load multiple patches', () => {
@@ -145,8 +172,8 @@ describe('DatabaseManager', () => {
       }
     ];
 
-    dbManager.savePatches(patches);
-    const loadedPatches = dbManager.loadPatches();
+    db.savePatches(patches);
+    const loadedPatches = db.loadPatches();
     
     expect(loadedPatches).toHaveLength(2);
     expect(loadedPatches).toEqual(expect.arrayContaining(patches));
@@ -165,7 +192,7 @@ describe('DatabaseManager', () => {
       custom: false
     };
 
-    dbManager.savePatch(patch);
+    db.savePatch(patch);
     
     const updates = {
       loved: true,
@@ -173,8 +200,8 @@ describe('DatabaseManager', () => {
       tags: ['updated', 'tags']
     };
 
-    dbManager.updatePatchMetadata(patch.path, updates);
-    const loadedPatches = dbManager.loadPatches();
+    db.updatePatchMetadata(patch.path, updates);
+    const loadedPatches = db.loadPatches();
     
     expect(loadedPatches).toHaveLength(1);
     expect(loadedPatches[0]).toEqual({
@@ -197,10 +224,10 @@ describe('DatabaseManager', () => {
     };
 
     // Save the same patch twice
-    dbManager.savePatch(patch);
-    dbManager.savePatch(patch);
+    db.savePatch(patch);
+    db.savePatch(patch);
     
-    const loadedPatches = dbManager.loadPatches();
+    const loadedPatches = db.loadPatches();
     expect(loadedPatches).toHaveLength(1);
   });
 
@@ -217,8 +244,8 @@ describe('DatabaseManager', () => {
       custom: false
     };
 
-    expect(dbManager.patchExists(patch.checksum)).toBe(false);
-    dbManager.savePatch(patch);
-    expect(dbManager.patchExists(patch.checksum)).toBe(true);
+    expect(db.patchExists(patch.checksum)).toBe(false);
+    db.savePatch(patch);
+    expect(db.patchExists(patch.checksum)).toBe(true);
   });
 }); 

@@ -1,5 +1,5 @@
 import React from 'react';
-import { render, screen, fireEvent } from '@testing-library/react';
+import { render, screen, fireEvent, act } from '@testing-library/react';
 import '@testing-library/jest-dom';
 import App from '../App';
 
@@ -48,7 +48,9 @@ describe('App', () => {
   });
 
   it('should load and display patches on mount', async () => {
-    render(<App />);
+    await act(async () => {
+      render(<App />);
+    });
     
     // Wait for patches to load
     const patch1 = await screen.findByText('Test Patch 1');
@@ -59,14 +61,18 @@ describe('App', () => {
   });
 
   it('should filter patches by loved status', async () => {
-    render(<App />);
+    await act(async () => {
+      render(<App />);
+    });
     
     // Wait for patches to load
     await screen.findByText('Test Patch 1');
     
     // Toggle loved filter
-    const lovedCheckbox = screen.getByLabelText('Loved');
-    fireEvent.click(lovedCheckbox);
+    await act(async () => {
+      const lovedCheckbox = screen.getByLabelText('Loved');
+      fireEvent.click(lovedCheckbox);
+    });
     
     // Only loved patches should be visible
     expect(screen.getByText('Test Patch 1')).toBeInTheDocument();
@@ -74,14 +80,18 @@ describe('App', () => {
   });
 
   it('should filter patches by category', async () => {
-    render(<App />);
+    await act(async () => {
+      render(<App />);
+    });
     
     // Wait for patches to load
     await screen.findByText('Test Patch 1');
     
     // Select Bass category
-    const categorySelect = screen.getByLabelText('Category');
-    fireEvent.change(categorySelect, { target: { value: 'Bass' } });
+    await act(async () => {
+      const categorySelect = screen.getByLabelText('Category');
+      fireEvent.change(categorySelect, { target: { value: 'Bass' } });
+    });
     
     // Only Bass patches should be visible
     expect(screen.getByText('Test Patch 1')).toBeInTheDocument();
@@ -89,14 +99,18 @@ describe('App', () => {
   });
 
   it('should filter patches by bank', async () => {
-    render(<App />);
+    await act(async () => {
+      render(<App />);
+    });
     
     // Wait for patches to load
     await screen.findByText('Test Patch 1');
     
     // Select userbank1
-    const bankSelect = screen.getByLabelText('Bank');
-    fireEvent.change(bankSelect, { target: { value: 'userbank1' } });
+    await act(async () => {
+      const bankSelect = screen.getByLabelText('Bank');
+      fireEvent.change(bankSelect, { target: { value: 'userbank1' } });
+    });
     
     // Only patches from userbank1 should be visible
     expect(screen.getByText('Test Patch 1')).toBeInTheDocument();
@@ -104,14 +118,18 @@ describe('App', () => {
   });
 
   it('should filter patches by library', async () => {
-    render(<App />);
+    await act(async () => {
+      render(<App />);
+    });
     
     // Wait for patches to load
     await screen.findByText('Test Patch 1');
     
     // Select testlib1
-    const librarySelect = screen.getByLabelText('Library');
-    fireEvent.change(librarySelect, { target: { value: 'testlib1' } });
+    await act(async () => {
+      const librarySelect = screen.getByLabelText('Library');
+      fireEvent.change(librarySelect, { target: { value: 'testlib1' } });
+    });
     
     // Only patches from testlib1 should be visible
     expect(screen.getByText('Test Patch 1')).toBeInTheDocument();
@@ -119,14 +137,18 @@ describe('App', () => {
   });
 
   it('should filter patches by tag', async () => {
-    render(<App />);
+    await act(async () => {
+      render(<App />);
+    });
     
     // Wait for patches to load
     await screen.findByText('Test Patch 1');
     
     // Enter 'bass' tag
-    const tagInput = screen.getByLabelText('Tags');
-    fireEvent.change(tagInput, { target: { value: 'bass' } });
+    await act(async () => {
+      const tagInput = screen.getByLabelText('Tags');
+      fireEvent.change(tagInput, { target: { value: 'bass' } });
+    });
     
     // Only patches with 'bass' tag should be visible
     expect(screen.getByText('Test Patch 1')).toBeInTheDocument();
@@ -134,14 +156,18 @@ describe('App', () => {
   });
 
   it('should filter patches by custom status', async () => {
-    render(<App />);
+    await act(async () => {
+      render(<App />);
+    });
     
     // Wait for patches to load
     await screen.findByText('Test Patch 1');
     
     // Toggle custom filter
-    const customCheckbox = screen.getByLabelText('Custom');
-    fireEvent.click(customCheckbox);
+    await act(async () => {
+      const customCheckbox = screen.getByLabelText('Custom');
+      fireEvent.click(customCheckbox);
+    });
     
     // Only custom patches should be visible
     expect(screen.getByText('Test Patch 1')).toBeInTheDocument();
@@ -149,17 +175,24 @@ describe('App', () => {
   });
 
   it('should reload patches when all filters are cleared', async () => {
-    render(<App />);
+    await act(async () => {
+      render(<App />);
+    });
     
     // Wait for patches to load
     await screen.findByText('Test Patch 1');
     
     // Set a filter
-    const categorySelect = screen.getByLabelText('Category');
-    fireEvent.change(categorySelect, { target: { value: 'Bass' } });
+    await act(async () => {
+      const categorySelect = screen.getByLabelText('Category');
+      fireEvent.change(categorySelect, { target: { value: 'Bass' } });
+    });
     
     // Clear the filter
-    fireEvent.change(categorySelect, { target: { value: '' } });
+    await act(async () => {
+      const categorySelect = screen.getByLabelText('Category');
+      fireEvent.change(categorySelect, { target: { value: '' } });
+    });
     
     // Should have called loadPatches again
     expect(mockElectronAPI.loadPatches).toHaveBeenCalledTimes(2);

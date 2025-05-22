@@ -1,7 +1,9 @@
 import { app, BrowserWindow, ipcMain, dialog } from 'electron';
 import path from 'path';
 import fs from 'fs';
-import { dbManager, Patch, calculateChecksum } from './database';
+import { getDbManager, Patch, calculateChecksum } from './database';
+
+const dbManager = getDbManager();
 
 // Handle creating/removing shortcuts on Windows when installing/uninstalling.
 if (require('electron-squirrel-startup')) {
@@ -153,7 +155,7 @@ ipcMain.handle('import-patches', async () => {
     // Associate patches with their banks after saving
     for (const patch of patches) {
       const bank = dbManager.getBank(patch.bank, patch.library);
-      if (bank) {
+      if (bank && bank.id !== undefined) {
         dbManager.associatePatchWithBank(patch.path, bank.id);
       }
     }

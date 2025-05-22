@@ -1,6 +1,6 @@
 module.exports = {
   preset: 'ts-jest',
-  testEnvironment: 'jsdom',
+  testEnvironment: 'node',
   moduleNameMapper: {
     '^@/(.*)$': '<rootDir>/src/$1'
   },
@@ -11,5 +11,8 @@ module.exports = {
   testMatch: ['**/__tests__/**/*.test.[jt]s?(x)'],
   transform: {
     '^.+\\.(ts|tsx)$': 'ts-jest'
-  }
+  },
+  transformIgnorePatterns: [
+    'node_modules/(?!(better-sqlite3)/)'
+  ]
 };
